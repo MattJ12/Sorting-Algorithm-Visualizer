@@ -21,40 +21,54 @@ export default class Main extends Component {
       };
    }
 
+   // Hook that executes after first render() lifecycle.
+   // Initializes arr stored in Main's state.
    componentDidMount() {
       this.resetArray(this.state.NUM_BARS);
    }
 
-   // Accepts a string algo as parameter and updates the state of
-   // the Main component.
-   setAlgo(algo) {
-      this.setState({algo: algo, SORTABLE: true});
+   // Accepts an integer algoIndex as parameter and updates the state of
+   // the Main component to store a string representation of the sorting
+   // algorithm selected by the user.  Enables start animation button for user.
+   // Selects/un-selects current algorithm button on UI depending on
+   // which algorithm button the user clicked.
+   setAlgo(algoIndex) {
+      const algos = ['quick sort', 'merge sort', 'bubble sort', 'selection sort']
+      this.setState({algo: algos[algoIndex], SORTABLE: true});
+      const algorithmButtons = document.getElementsByClassName('algorithm-button');
+      for (let i = 0; i < algorithmButtons.length; i++) {
+         // Select/un-select algo button depending on which algo button user clicked.
+         algorithmButtons[i].style.backgroundColor = i === algoIndex ? '#325C74' : '#add8e6';
+      }
    }
 
    // Accepts a string length as parameter and updates the state
-   // of the Main component and also resets the array stored in
-   // Main's state to have a length equal to the paramater length.
+   // of the Main component to have NUM_BARS equal the parameter length.
+   // Updates arr stored in the state of the Main component to have a
+   // number of values equal to the value of the parameter length.
    changeNumElements(length) {
       this.setState({NUM_BARS: length});
       this.resetArray(length);
    }
 
-   // Accepts an integer paramter value and returns
-   // it if it is less thatn 38.
+   // Accepts an integer parameter value and returns it
+   // if NUM_BARS stored in Main's state is less than 38,
+   // otherwise returns an empty string.
    placeArrayValue(value) {
-      if (this.state.arr.length < 38) return Math.floor(value);
+      if (this.state.NUM_BARS < 38) return Math.floor(value);
+      return '';
    }
 
    // Accepts an integer parameter value and if it is smaller
-   // than 24 it returns 24, otherwise returning value.
+   // than 24 it returns 24, otherwise returns value.
    findHeight(value) {
       if (value < 24) return 24;
       return value;
    }
 
-   // Accepts an integer length as parameter and fills arr
-   // stored in Main's state with a new array with length
-   // equal to the parameter length.
+   // Accepts integer parameter length and fills arr in
+   // Main's state with a number of random elements
+   // equal to parameter length.
    resetArray(length) {
       const arr = [];
       for (let i = 0; i < length; i++) {
@@ -70,7 +84,7 @@ export default class Main extends Component {
    }
 
    // Accepts a boolean parameter toggle and toggles all the buttons
-   // on this page depending on the value of toggle.
+   // on this page depending on the boolean value of toggle.
    toggleAllButtons(toggle) {
       const algorithmButtons = document.getElementsByClassName('algorithm-button');
       for (let i = 0; i < 4; i++) {
@@ -84,12 +98,16 @@ export default class Main extends Component {
 
    // Executes at the end of the sorting animation.
    // Flashes all bars to the non-default color and back.
-   // Toggles on all buttons on the page.
+   // Toggles on all buttons on the page after the
+   // finished sorting animation has run.
    finishedSortingAnimation() {
       const arrayBars = document.getElementsByClassName('array-bar');
       for (let i = 0; i < arrayBars.length; i++) {
          setTimeout(() => {
             this.setBarColor(i, this.state.COLOR, arrayBars);
+            // After last bar has been changed to non-default color
+            // wait 1000 milliseconds then turn every bar back to
+            // the default color and toggle on buttons on page.
             if (i === arrayBars.length - 1) {
                setTimeout(() => {
                   for(let j = 0; j < arrayBars.length; j++) {
@@ -120,13 +138,12 @@ export default class Main extends Component {
       for (let i = 0; i < animations.length; i++) {
          const animation = animations[i];
          setTimeout(() => {
+            // Change color of bars being compared.
             if (i % 3 < 2) {
-               // Change color of bars being compared.
                const color = i % 3 === 1 ? this.state.DEFAULT_COLOR : this.state.COLOR;
                this.setBarColor(animation[0], color, arrayBars);
                this.setBarColor(animation[1], color, arrayBars);
-            } else {
-               // Execute swap of values in array.
+            } else { // Execute swap of values in array.
                this.setBarHeight(animation[0], animation[1], arrayBars);
             }
             // Triggered after final sorting animation finished.
@@ -142,8 +159,8 @@ export default class Main extends Component {
       for (let i = 0; i < animations.length; i++) {
          const animation = animations[i];
          setTimeout(() => {
+            // Change color of bars being compared.
             if (animation.length < 4) {
-               // Change color of bars being compared.
                const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
                if (animation.length === 3) {
                   this.setBarColor(animation[1], color, arrayBars);
@@ -151,8 +168,7 @@ export default class Main extends Component {
                } else {
                   this.setBarColor(animation[1], color, arrayBars);
                }
-            } else {
-               // Execute swap of values in array.
+            } else { // Execute swap of values in array.
                this.setBarHeight(animation[2], animation[1], arrayBars);
                this.setBarHeight(animation[3], animation[0], arrayBars);
             }
@@ -169,12 +185,11 @@ export default class Main extends Component {
       for (let i = 0; i < animations.length; i++) {
          const animation = animations[i];
          setTimeout(() => {
+            // Change color of bars being compared.
             if (animation.length < 4) {
-               // Change color of bars being compared.
                const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
                this.setBarColor(animation[1], color, arrayBars);
-            } else {
-               // Execute swap of values in array.
+            } else { // Execute swap of values in array.
                this.setBarHeight(animation[0], animation[3], arrayBars);
                this.setBarHeight(animation[1], animation[2], arrayBars);
             }
@@ -191,13 +206,12 @@ export default class Main extends Component {
       for (let i = 0; i < animations.length; i++) {
          const animation = animations[i];
          setTimeout(() => {
+            // Change color of bars being compared.
             if (animation.length < 4) {
-               // Change color of bars being compared.
                const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
                this.setBarColor(animation[1], color, arrayBars);
                this.setBarColor(animation[2], color, arrayBars);
-            } else {
-               // Execute swap of values in array.
+            } else { // Execute swap of values in array.
                this.setBarHeight(animation[0], animation[3], arrayBars);
                this.setBarHeight(animation[1], animation[2], arrayBars);
             }
@@ -216,7 +230,8 @@ export default class Main extends Component {
    // Accepts an integer index, double height, array arrayBars as parameters
    // and sets the bar at index to the specified height.
    setBarHeight(index, height, arrayBars) {
-      arrayBars[index].style.height = height + 'px';
+      arrayBars[index].style.height = this.findHeight(height) + 'px';
+      arrayBars[index].innerHTML = this.placeArrayValue(Math.floor(height));
    }
 
    // Render method for Main component.
@@ -228,22 +243,22 @@ export default class Main extends Component {
                <div className='algorithm-button-container'>
                   <button
                      className='algorithm-button'
-                     onClick={() => this.setAlgo('quick sort')}
+                     onClick={() => this.setAlgo(0)}
                      >Quick Sort
                   </button>
                   <button
                      className='algorithm-button'
-                     onClick={() => this.setAlgo('merge sort')}
+                     onClick={() => this.setAlgo(1)}
                      >Merge Sort
                   </button>
                   <button
                      className='algorithm-button'
-                     onClick={() => this.setAlgo('bubble sort')}
+                     onClick={() => this.setAlgo(2)}
                      >Bubble Sort
                   </button>
                   <button
                      className='algorithm-button'
-                     onClick={() => this.setAlgo('selection sort')}
+                     onClick={() => this.setAlgo(3)}
                      >Selection Sort
                   </button>
                </div>
@@ -287,7 +302,7 @@ export default class Main extends Component {
                      style={{
                         backgroundColor: `${this.state.DEFAULT_COLOR}`,
                         height: `${this.findHeight(value)}px`,
-                        width: `${(window.screen.width - 40) / this.state.arr.length - 2}px`
+                        width: `${(window.screen.width - 40) / this.state.NUM_BARS - 2}px`
                      }}>{this.placeArrayValue(value)}</div>
                ))}
             </div>
