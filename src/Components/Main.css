@@ -27,6 +27,7 @@
 
 .algorithm-button:hover, .algorithm-button:focus {
    background-color: #325C74;
+   cursor: pointer;
 }
 
 .create-array-button {
@@ -41,7 +42,8 @@
 }
 
 .create-array-button:hover {
-   background-color: #A020F0;
+   background-color: #8A2BE2;
+   cursor: pointer;
 }
 
 .start-sorting-button {
@@ -57,6 +59,7 @@
 
 .start-sorting-button:hover {
    background-color: #007600;
+   cursor: pointer;
 }
 
 .array-container {
@@ -84,6 +87,7 @@
 .num-elements {
    position: absolute;
    transition-duration: 0.4s;
+   cursor: pointer;
 }
 
 .num-elements-text {
@@ -98,6 +102,7 @@
    position: absolute;
    left: 175px;
    transition-duration: 0.4s;
+   cursor: pointer;
 }
 
 .sorting-speed-text {
