@@ -1,0 +1,109 @@
+.header {
+   position: absolute;
+   background: #f2f3f4;
+   height: 160px;
+   width: 100%;
+}
+
+.title {
+   text-align: center;
+   font-size: 35px;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.algorithm-button-container {
+   position: absolute;
+   left: 20px;
+}
+
+.algorithm-button {
+   font-family: Arial, Helvetica, sans-serif;
+   transition-duration: 0.4s;
+   background-color: #add8e6;
+   font-size: 18px;
+   padding: 16px;
+   border: 1px solid #325C74;
+}
+
+.algorithm-button:hover, .algorithm-button:focus {
+   background-color: #325C74;
+}
+
+.create-array-button {
+   position: absolute;
+   left: 550px;
+   font-family: Arial, Helvetica, sans-serif;
+   transition-duration: 0.4s;
+   background-color: #b19cd9;
+   font-size: 18px;
+   padding: 16px;
+   border: 1px solid #A020F0;
+}
+
+.create-array-button:hover {
+   background-color: #A020F0;
+}
+
+.start-sorting-button {
+   position: absolute;
+   left: 745px;
+   font-family: Arial, Helvetica, sans-serif;
+   transition-duration: 0.4s;
+   background-color: #90ee90;
+   font-size: 18px;
+   padding: 16px;
+   border: 1px solid #007600;
+}
+
+.start-sorting-button:hover {
+   background-color: #007600;
+}
+
+.array-container {
+   position: absolute;
+   top: 160px;
+   right: 20px;
+   left: 20px;
+}
+
+.array-bar {
+   padding-top: 7px;
+   font-family: Arial, Helvetica, sans-serif;
+   text-align: center;
+   display: inline-block;
+   margin: 0 1px;
+   vertical-align: top;
+}
+
+.slider-container {
+   position: absolute;
+   right: 335px;
+   top: 90px;
+}
+
+.num-elements {
+   position: absolute;
+   transition-duration: 0.4s;
+}
+
+.num-elements-text {
+   position: absolute;
+   font-family: Arial, Helvetica, sans-serif;
+   top: 10px;
+   left: 10px;
+   width: 125px;
+}
+
+.sorting-speed {
+   position: absolute;
+   left: 175px;
+   transition-duration: 0.4s;
+}
+
+.sorting-speed-text {
+   position: absolute;
+   font-family: Arial, Helvetica, sans-serif;
+   width: 110px;
+   left: 190px;
+   top: 10px;
+}
