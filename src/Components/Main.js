@@ -55,7 +55,7 @@ export default class Main extends Component {
    // if NUM_BARS stored in Main's state is less than 38,
    // otherwise returns an empty string.
    placeArrayValue(value) {
-      if (this.state.NUM_BARS < 38) return Math.floor(value);
+      if (this.state.NUM_BARS < 47) return Math.floor(value);
       return '';
    }
 
