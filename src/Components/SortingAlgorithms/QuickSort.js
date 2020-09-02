@@ -24,7 +24,8 @@ const quickSortHelper = (arr, animations, left, right) => {
 // as parameters and partitions a sub-array of arr based off the left
 // and right index parameters such that all elements less than the pivot
 // come before the elements larger than the pivot.  Returns an integer
-// used to help split up sub-arrays.
+// used to help split up sub-arrays.  Updates animations to
+// store a history of how elements were sorted.
 const partition = (arr, animations, left, right) => {
    // 0 -> default color
    // 1 -> non-default color

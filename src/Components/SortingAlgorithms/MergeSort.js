@@ -24,7 +24,8 @@ const mergeSort = (arr, helperArr, animations, low, high) => {
 
 // Accepts array arr, array helperArr, array animations, integer low,
 // integer middle, integer high and marges both halves of helperArr together
-// based on low, middle and high indexes.
+// based on low, middle and high indexes.  Updates animations to
+// store a history of how elements were sorted.
 const merge = (arr, helperArr, animations, low, middle, high) => {
    // Fills helperArr copy of arr for elements being considered.
    for (let i = low; i <= high; i++) {

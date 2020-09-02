@@ -3,6 +3,7 @@ import { MergeSort } from './SortingAlgorithms/MergeSort'
 import { QuickSort } from './SortingAlgorithms/QuickSort'
 import { SelectionSort } from './SortingAlgorithms/SelectionSort'
 import { BubbleSort } from './SortingAlgorithms/BubbleSort'
+import { InsertionSort } from './SortingAlgorithms/InsertionSort'
 import './Main.css';
 
 // This component handles all of the rendering for the visualizer and interprets
@@ -14,10 +15,10 @@ export default class Main extends Component {
          arr: [],
          algo: '',
          SORTABLE: false,
-         NUM_BARS: 75,
+         NUM_BARS: 50,
          SORTING_SPEED: 247,
          DEFAULT_COLOR: '#add8e6',
-         COLOR: '#A020F0'
+         NON_DEFAULT_COLOR: '#A020F0'
       };
    }
 
@@ -33,7 +34,7 @@ export default class Main extends Component {
    // Selects/un-selects current algorithm button on UI depending on
    // which algorithm button the user clicked.
    setAlgo(algoIndex) {
-      const algos = ['quick sort', 'merge sort', 'bubble sort', 'selection sort']
+      const algos = ['quick sort', 'merge sort', 'bubble sort', 'selection sort', 'insertion sort']
       this.setState({algo: algos[algoIndex], SORTABLE: true});
       const algorithmButtons = document.getElementsByClassName('algorithm-button');
       for (let i = 0; i < algorithmButtons.length; i++) {
@@ -52,7 +53,7 @@ export default class Main extends Component {
    }
 
    // Accepts an integer parameter value and returns it
-   // if NUM_BARS stored in Main's state is less than 38,
+   // if NUM_BARS stored in Main's state is less than 47,
    // otherwise returns an empty string.
    placeArrayValue(value) {
       if (this.state.NUM_BARS < 47) return Math.floor(value);
@@ -87,7 +88,7 @@ export default class Main extends Component {
    // on this page depending on the boolean value of toggle.
    toggleAllButtons(toggle) {
       const algorithmButtons = document.getElementsByClassName('algorithm-button');
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < algorithmButtons.length; i++) {
          algorithmButtons[i].disabled = toggle;
       }
       document.getElementsByClassName('create-array-button')[0].disabled = toggle;
@@ -104,7 +105,7 @@ export default class Main extends Component {
       const arrayBars = document.getElementsByClassName('array-bar');
       for (let i = 0; i < arrayBars.length; i++) {
          setTimeout(() => {
-            this.setBarColor(i, this.state.COLOR, arrayBars);
+            this.setBarColor(i, this.state.NON_DEFAULT_COLOR, arrayBars);
             // After last bar has been changed to non-default color
             // wait 1000 milliseconds then turn every bar back to
             // the default color and toggle on buttons on page.
@@ -128,7 +129,8 @@ export default class Main extends Component {
       if (algo === 'quick sort') this.quickSort();
       else if (algo === 'merge sort') this.mergeSort();
       else if (algo === 'bubble sort') this.bubbleSort();
-      else this.selectionSort();
+      else if (algo === 'selection sort') this.selectionSort();
+      else this.insertionSort();
    }
 
    // Creates animations for the merge sort algorithm.
@@ -140,10 +142,10 @@ export default class Main extends Component {
          setTimeout(() => {
             // Change color of bars being compared.
             if (i % 3 < 2) {
-               const color = i % 3 === 1 ? this.state.DEFAULT_COLOR : this.state.COLOR;
+               const color = i % 3 === 1 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
                this.setBarColor(animation[0], color, arrayBars);
                this.setBarColor(animation[1], color, arrayBars);
-            } else { // Execute swap of values in array.
+            } else { // Animate swap of values in array.
                this.setBarHeight(animation[0], animation[1], arrayBars);
             }
             // Triggered after final sorting animation finished.
@@ -161,14 +163,14 @@ export default class Main extends Component {
          setTimeout(() => {
             // Change color of bars being compared.
             if (animation.length < 4) {
-               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
+               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
                if (animation.length === 3) {
                   this.setBarColor(animation[1], color, arrayBars);
                   this.setBarColor(animation[2], color, arrayBars);
                } else {
                   this.setBarColor(animation[1], color, arrayBars);
                }
-            } else { // Execute swap of values in array.
+            } else { // Animate swap of values in array.
                this.setBarHeight(animation[2], animation[1], arrayBars);
                this.setBarHeight(animation[3], animation[0], arrayBars);
             }
@@ -187,9 +189,9 @@ export default class Main extends Component {
          setTimeout(() => {
             // Change color of bars being compared.
             if (animation.length < 4) {
-               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
+               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
                this.setBarColor(animation[1], color, arrayBars);
-            } else { // Execute swap of values in array.
+            } else { // Animate swap of values in array.
                this.setBarHeight(animation[0], animation[3], arrayBars);
                this.setBarHeight(animation[1], animation[2], arrayBars);
             }
@@ -208,12 +210,36 @@ export default class Main extends Component {
          setTimeout(() => {
             // Change color of bars being compared.
             if (animation.length < 4) {
-               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.COLOR;
+               const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
                this.setBarColor(animation[1], color, arrayBars);
                this.setBarColor(animation[2], color, arrayBars);
-            } else { // Execute swap of values in array.
+            } else { // Animate swap of values in array.
                this.setBarHeight(animation[0], animation[3], arrayBars);
                this.setBarHeight(animation[1], animation[2], arrayBars);
+            }
+            // Triggered after final sorting animation finished.
+            if (i === animations.length - 1) this.finishedSortingAnimation();
+         }, i * (250 - this.state.SORTING_SPEED))
+      }
+   }
+
+   // Creates animations for the inerstion sort algorithm.
+   insertionSort() {
+      const animations = InsertionSort(this.state.arr);
+      const arrayBars = document.getElementsByClassName('array-bar');
+      for (let i = 0; i < animations.length; i++) {
+         const animation = animations[i];
+         setTimeout(() => {
+            // Change color of bar or bars being compared.
+            if (animation[0] <= -1) {
+               const color = animation[0] === -1 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
+               // To change the color of two bars.
+               if (animation.length === 3) {
+                  this.setBarColor(animation[2], color, arrayBars);
+               }
+               this.setBarColor(animation[1], color, arrayBars);
+            } else { // Animate insertion of value in arr.
+               this.setBarHeight(animation[0], animation[1], arrayBars);
             }
             // Triggered after final sorting animation finished.
             if (i === animations.length - 1) this.finishedSortingAnimation();
@@ -260,6 +286,11 @@ export default class Main extends Component {
                      className='algorithm-button'
                      onClick={() => this.setAlgo(3)}
                      >Selection Sort
+                  </button>
+                  <button
+                     className='algorithm-button'
+                     onClick={() => this.setAlgo(4)}
+                     >Insertion Sort
                   </button>
                </div>
                <button

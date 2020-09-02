@@ -10,11 +10,12 @@ export const BubbleSort = (arr) => {
 }
 
 // Accepts array arr and array animations as parameters and applies the
-// bubble sort algorithm to sort arr.
+// bubble sort algorithm to sort arr.  Updates animations to
+// store a history of how elements were sorted.
 const bubbleSort = (arr, animations) => {
    // 0 -> default color
    // 1 -> non-default color
-   const index = [0, 1];
+   const indexes = [0, 1];
    // Making a number of passes equal to the number of elements
    // in arr ensures the array is sorted.
    // Loop breaks if arr is sorted before arr.length iterations.
@@ -24,10 +25,10 @@ const bubbleSort = (arr, animations) => {
       for (let j = 0; j < arr.length - 1; j++) {
          // Animation for bar at index j and j + 1 changing
          // to non-default color to show comparison.
-         animations.push([index[1], j, j + 1]);
+         animations.push([indexes[1], j, j + 1]);
          // Animation for bar at index j and j + 1 changing
          // to default color after comparison.
-         animations.push([index[0], j, j + 1]);
+         animations.push([indexes[0], j, j + 1]);
          // Swapping of values.
          if (arr[j] > arr[j + 1]) {
             // Animation to swap values in arr.

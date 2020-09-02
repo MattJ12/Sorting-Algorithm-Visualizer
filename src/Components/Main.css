@@ -33,7 +33,7 @@
 
 .create-array-button {
    position: absolute;
-   left: 563px;
+   left: 711px;
    font-family: Arial, Helvetica, sans-serif;
    transition-duration: 0.4s;
    background-color: #b19cd9;
@@ -49,7 +49,7 @@
 
 .start-sorting-button {
    position: absolute;
-   left: 747px;
+   left: 895px;
    font-family: Arial, Helvetica, sans-serif;
    transition-duration: 0.4s;
    background-color: #90ee90;
