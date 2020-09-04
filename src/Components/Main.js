@@ -165,11 +165,9 @@ export default class Main extends Component {
             if (animation.length < 4) {
                const color = animation[0] === 0 ? this.state.DEFAULT_COLOR : this.state.NON_DEFAULT_COLOR;
                if (animation.length === 3) {
-                  this.setBarColor(animation[1], color, arrayBars);
                   this.setBarColor(animation[2], color, arrayBars);
-               } else {
-                  this.setBarColor(animation[1], color, arrayBars);
                }
+               this.setBarColor(animation[1], color, arrayBars);
             } else { // Animate swap of values in array.
                this.setBarHeight(animation[2], animation[1], arrayBars);
                this.setBarHeight(animation[3], animation[0], arrayBars);
